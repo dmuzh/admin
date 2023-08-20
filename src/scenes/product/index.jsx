@@ -120,7 +120,7 @@ export default function Products() {
       ),
     },
     {
-      title: 'Tên SP',
+      title: 'Tên Sản Phẩm',
       dataIndex: 'name',
       key: 'name',
       render: function (text, record) {
@@ -140,14 +140,14 @@ export default function Products() {
       },
     },
     {
-      title: 'Tên SP',
+      title: 'Danh sản phẩm',
       dataIndex: 'category',
       key: 'categoryName',
       render: function (text, record) {
         return (
-          <Link to={`categories/${record.category._id}`}>
+          <div to={`categories/${record.category._id}`}>
             {record.category.name}
-          </Link>
+          </div>
         );
       },
     },
