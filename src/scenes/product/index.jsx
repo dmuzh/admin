@@ -140,7 +140,7 @@ export default function Products() {
       },
     },
     {
-      title: 'Danh sản phẩm',
+      title: 'Danh muuc sản phẩm',
       dataIndex: 'category',
       key: 'categoryName',
       render: function (text, record) {
