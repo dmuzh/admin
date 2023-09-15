@@ -3,11 +3,15 @@ import {
 
   Form,
   message,
-  
+
 } from 'antd';
 import numeral from 'numeral';
 import 'numeral/locales/vi';
-
+import {
+  Box,
+  Typography,
+  Paper,
+} from "@mui/material";
 
 import axiosClient from '../../libraries/axiosClient';
 import SuppliersForm from '../../components/suppliersForm';
@@ -22,7 +26,7 @@ const MESSAGE_TYPE = {
 numeral.locale('vi');
 
 export default function AddSuppliers() {
-    const [suppliers, setSuppliers] = useState([])
+  const [suppliers, setSuppliers] = useState([])
 
   const [refresh, setRefresh] = useState(0);
 
@@ -31,11 +35,14 @@ export default function AddSuppliers() {
 
 
 
-  const onShowMessage = useCallback( 
+  const onShowMessage = useCallback(
     (content, type = MESSAGE_TYPE.SUCCESS) => {
       messageApi.open({
         type: type,
         content: content,
+        style: {
+          marginTop: '100px',
+        },
       });
     },
     [messageApi],
@@ -51,7 +58,7 @@ export default function AddSuppliers() {
 
         onShowMessage(res.data.message);
 
-  
+
       } catch (error) {
         if (error?.response?.data?.errors) {
           error.response.data.errors.map((e) =>
@@ -67,7 +74,7 @@ export default function AddSuppliers() {
 
 
 
-// data categori
+  // data categori
   const getSuppliers = useCallback(async () => {
     try {
       const res = await axiosClient.get('/suppliers');
@@ -88,14 +95,37 @@ export default function AddSuppliers() {
   return (
     <>
       {contextHolder}
-      <SuppliersForm
-        form={createForm}
-        onFinish={onFinish}
-        optionStyle={{
-          maxWidth: 900,
-          margin: '120px 50px 0 10px',
-        }}
-      />
+      <Box sx={{ pt: "80px", pb: "20px" }}>
+
+        <Paper
+          sx={{
+            boxShadow: "none !important",
+            borderRadius: "12px",
+            borderStyle: "solid",
+            borderWidth: "1px",
+            borderColor: "divider",
+            maxWidth: "800px",
+            margin: "0 auto",
+            cursor: "pointer",
+            overflow: "hidden",
+          }}
+        >
+          <Typography variant="h5"
+            sx={{
+              margin: '10px 10px 0px 10px',
+            }}>
+            Add Suppliers
+          </Typography>
+          <SuppliersForm
+            form={createForm}
+            onFinish={onFinish}
+            optionStyle={{
+              maxWidth: 900,
+              margin: '60px 50px 0 10px',
+            }}
+          />
+        </Paper>
+      </Box>
     </>
   );
 }

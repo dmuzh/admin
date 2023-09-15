@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import 'numeral/locales/vi';
-import { DeleteOutlined, EditOutlined,SearchOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, SearchOutlined } from '@ant-design/icons';
 
 import {
     Button, Input, Space, Form, message, Popconfirm,
@@ -249,12 +249,12 @@ export default function Categories() {
             title: 'Thời Gian Tạo Ra',
             key: 'createdAt',
             dataIndex: 'createdAt',
-          },
-          {
+        },
+        {
             title: 'Thời Gian Cập Nhập ',
             key: 'updatedAt',
             dataIndex: 'updatedAt',
-          },
+        },
         {
             title: '',
             key: 'actions',
@@ -288,44 +288,45 @@ export default function Categories() {
 
 
     return (
-        <>
-            {contextHolder}
-            <div className='title'>
-                <div><h1>Categories</h1></div>
-                <div className='add'>
-                    <Link to='/CategoriesAdd' >
-                        <Box sx={{ '& > :not(style)': { m: 1 } }}>
-                            <Fab size="small" color="primary" aria-label="add" >
-                                <AddIcon />
-                            </Fab>
+        <div >
+            <div style={{ marginTop: '60px' }}>
+                {contextHolder}
+                <div className='title'>
+                    <div><h3>Categories</h3></div>
+                    <div className='add'>
+                        <Link to='/CategoriesAdd' >
+                            <Box sx={{ '& > :not(style)': { m: 1 } }}>
+                                <Fab size="small" color="primary" aria-label="add" >
+                                    <AddIcon />
+                                </Fab>
 
-                        </Box>
-                    </Link>
+                            </Box>
+                        </Link>
+                    </div>
                 </div>
+                <Table rowKey="_id" columns={columns} dataSource={categories} />
+                <Modal
+                    open={editModalVisible}
+                    centered
+                    title="Cập nhật thông tin"
+                    onCancel={() => {
+                        setEditModalVisible(false);
+                    }}
+                    cancelText="Đóng"
+                    okText="Lưu"
+                    onOk={() => {
+                        updateForm.submit();
+                    }}
+                >
+                    <CategoriesForm
+                        form={updateForm}
+                        onFinish={onEditFinish}
+                        formName="update-Categories"
+                        isHiddenSubmit
+                    />
+                </Modal>
+
             </div>
-            <Table rowKey="_id" columns={columns} dataSource={categories} />
-            <Modal
-                open={editModalVisible}
-                centered
-                title="Cập nhật thông tin"
-                onCancel={() => {
-                    setEditModalVisible(false);
-                }}
-                cancelText="Đóng"
-                okText="Lưu"
-                onOk={() => {
-                    updateForm.submit();
-                }}
-            >
-                <CategoriesForm
-                    form={updateForm}
-                    onFinish={onEditFinish}
-                    formName="update-Categories"
-                    isHiddenSubmit
-                />
-            </Modal>
-
-
-        </>
+        </div>
     )
 };

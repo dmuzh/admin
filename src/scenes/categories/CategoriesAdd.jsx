@@ -3,11 +3,15 @@ import {
 
   Form,
   message,
-  
+
 } from 'antd';
 import numeral from 'numeral';
 import 'numeral/locales/vi';
-
+import {
+  Box,
+  Typography,
+  Paper,
+} from "@mui/material";
 
 import axiosClient from '../../libraries/axiosClient';
 import CategoriesFrom from '../../components/categoriesForm';
@@ -31,11 +35,14 @@ export default function CategoriesAdd() {
 
 
 
-  const onShowMessage = useCallback( 
+  const onShowMessage = useCallback(
     (content, type = MESSAGE_TYPE.SUCCESS) => {
       messageApi.open({
         type: type,
         content: content,
+        style: {
+          marginTop: '100px',
+        },
       });
     },
     [messageApi],
@@ -51,7 +58,7 @@ export default function CategoriesAdd() {
 
         onShowMessage(res.data.message);
 
-  
+
       } catch (error) {
         if (error?.response?.data?.errors) {
           error.response.data.errors.map((e) =>
@@ -67,7 +74,7 @@ export default function CategoriesAdd() {
 
 
 
-// data categori
+  // data categori
   const getCategories = useCallback(async () => {
     try {
       const res = await axiosClient.get('/categories');
@@ -87,16 +94,41 @@ export default function CategoriesAdd() {
 
   return (
     <>
-      {contextHolder}
-      <CategoriesFrom
-        form={createForm}
-     
-        onFinish={onFinish}
-        optionStyle={{
-          maxWidth: 900,
-          margin: '60px auto',
-        }}
-      />
+      <Box sx={{ pt: "80px", pb: "20px" }}>
+
+        <Paper
+          sx={{
+            boxShadow: "none !important",
+            borderRadius: "12px",
+            borderStyle: "solid",
+            borderWidth: "1px",
+            borderColor: "divider",
+            maxWidth: "800px",
+            margin: "0 auto",
+            cursor: "pointer",
+            overflow: "hidden",
+          }}
+        >
+          <Typography variant="h5"
+            sx={{
+              margin: '10px 10px 0px 10px',
+            }}>
+                    {contextHolder}
+
+            Add Categories
+          </Typography>
+          <CategoriesFrom
+            form={createForm}
+
+            onFinish={onFinish}
+            optionStyle={{
+              maxWidth: 900,
+              margin: '50px 50px 0px 10px',
+            }}
+          />
+        </Paper>
+      </Box>
+
     </>
   );
 }

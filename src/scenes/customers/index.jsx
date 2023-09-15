@@ -231,19 +231,13 @@ const Customers = () => {
                 )
             },
         },
-        {
-            title: 'firstName',
-            dataIndex: 'firstName',
-            key: 'firstName',
-            ...getColumnSearchProps('firstName'),
-        },
+     
         {
             title: 'Name',
-            dataIndex: 'lastName',
-            key: 'lastName',
-            ...getColumnSearchProps('lastName'),
+            dataIndex: 'fullName',
+            key: 'fullName',
+            ...getColumnSearchProps('fullName'),
         },
-
         {
             title: 'email',
             dataIndex: 'email',
@@ -265,12 +259,14 @@ const Customers = () => {
             title: 'Age',
             dataIndex: 'birthday',
             key: 'age',
-            render: (birthday) => {
+            render: (birthday) => 
+            {
+                console.log('««««« birthday »»»»»', birthday);
                 const birthDate = new Date(birthday);
                 const age = new Date().getFullYear() - birthDate.getFullYear();
                 return age;
             },
-            ...getColumnSearchProps('birthday'),
+            // ...getColumnSearchProps('birthday'),
         },
         {
             title: 'Address',
@@ -308,12 +304,11 @@ const Customers = () => {
         },
     ];
     return (
-        <>
-            <div className='title'>
-                <div><h1>Customers</h1></div>
-
-            </div>
+        <div style={{marginTop:"70px"}}>
+           
             {contextHolder}
+            <div><h3>Customers</h3></div>
+
             <Table rowKey="_id" columns={columns} dataSource={customers} />
 
             <Modal
@@ -338,6 +333,6 @@ const Customers = () => {
                     isHiddenSubmit
                 />
             </Modal>
-        </>);
+        </div>);
 };
 export default Customers

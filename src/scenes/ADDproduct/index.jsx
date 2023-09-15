@@ -37,9 +37,12 @@ export default function AddProduct() {
 
   const onShowMessage = useCallback(
     (content, type = MESSAGE_TYPE.SUCCESS) => {
-      messageApi.open({
+      messageApi.success({
         type: type,
         content: content,
+        style: {
+          marginTop: '100px',
+        },
       });
     },
     [messageApi],
@@ -110,7 +113,6 @@ export default function AddProduct() {
 
   return (
     <>
-      {contextHolder}
       <Box sx={{ pt: "80px", pb: "20px" }}>
 
         <Paper
@@ -126,10 +128,13 @@ export default function AddProduct() {
             overflow: "hidden",
           }}
         >
+          
+
           <Typography variant="h5"
             sx={{
               margin: '10px 10px 0px 10px',
             }}>
+              
             Add Product
           </Typography>
           <ProductForm
@@ -145,7 +150,7 @@ export default function AddProduct() {
           />
         </Paper>
       </Box>
-
+      {contextHolder}
     </>
   );
 }

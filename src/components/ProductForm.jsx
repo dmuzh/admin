@@ -115,7 +115,12 @@ function ProductForm(props) {
         <Input />
       </Form.Item>
 
-      <Form.Item label="địa chỉ hình ảnh" name="cover">
+      <Form.Item
+       label="địa chỉ hình ảnh"
+        name="cover"
+        rules={[
+          { required: true, message: 'Vui lòng nhập tồn kho' },
+        ]}>
         <Input />
       </Form.Item>
 

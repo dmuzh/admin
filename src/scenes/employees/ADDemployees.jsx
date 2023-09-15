@@ -9,7 +9,7 @@ import {
   Box,
   Typography,
   Paper,
- 
+
 } from "@mui/material";
 import numeral from 'numeral';
 import 'numeral/locales/vi';
@@ -42,6 +42,9 @@ export default function ADDemployees() {
       messageApi.open({
         type: type,
         content: content,
+        style: {
+          marginTop: '100px',
+        },
       });
     },
     [messageApi],
@@ -93,43 +96,44 @@ export default function ADDemployees() {
 
 
   return (
-    
-    // {contextHolder}
+
 
     <Box sx={{ pt: "80px", pb: "20px" }}>
-  
-    <Paper
-      sx={{
-        boxShadow: "none !important",
-        borderRadius: "12px",
-        borderStyle: "solid",
-        borderWidth: "1px",
-        borderColor: "divider",
-        p: "20px",
-        maxWidth: "800px",
-        margin: "0 auto",
-        cursor: "pointer",
-        overflow: "hidden",
-      }}
-    >
-        <Typography variant="h6" sx={{ marginBottom: "14px" }}>
-      Add Employees
-    </Typography>
-      <EmployeesForm
-        form={createForm}
-        onFinish={onFinish}
-        optionStyle={{
-          maxWidth: 900,
-          margin: '20px 50px 0 0',
+
+      <Paper
+        sx={{
+          boxShadow: "none !important",
+          borderRadius: "12px",
+          borderStyle: "solid",
+          borderWidth: "1px",
+          borderColor: "divider",
+          p: "20px",
+          maxWidth: "800px",
+          margin: "0 auto",
+          cursor: "pointer",
+          overflow: "hidden",
         }}
-      />
+      >
+        <Typography variant="h6" sx={{ marginBottom: "14px" }}>
+        {contextHolder}
+
+          Add Employees
+        </Typography>
+        <EmployeesForm
+          form={createForm}
+          onFinish={onFinish}
+          optionStyle={{
+            maxWidth: 900,
+            margin: '20px 50px 0 0',
+          }}
+        />
 
 
-    </Paper>
-  </Box>
-        
+      </Paper>
+    </Box>
 
 
-     
-      );
+
+
+  );
 }

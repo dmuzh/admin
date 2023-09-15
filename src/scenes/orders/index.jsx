@@ -4,15 +4,16 @@ import {
   Button,
   Form,
   message,
-  Popconfirm,
   Space,
   Modal,
+  Avatar
 } from 'antd';
+// import { Avatar, Space } from 'antd';
+
 import numeral from 'numeral';
 import 'numeral/locales/vi';
-import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { UserOutlined, EditOutlined, } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
-import { AiOutlineEye } from 'react-icons/ai';
 
 import axiosClient from '../../libraries/axiosClient';
 import OrdersForm from '../../components/ordersForm';
@@ -99,7 +100,43 @@ export default function Orders() {
     }
   }, []);
 
+  const getCustomer = useCallback(async () => {
+    try {
+      const res = await axiosClient.get('/customers');
+      setCustomer(res.data.payload || []);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+  const getEmployee = useCallback(async () => {
+    try {
+      const res = await axiosClient.get('/employees');
+      console.log('««««« Employee »»»»»', res);
+      setEmployee(res.data.payload || []);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+  const getProduct = useCallback(async () => {
+    try {
+      const res = await axiosClient.get('/products');
+      setProducts(res.data.payload);
+      console.log('««««« product »»»»»', res);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
+  useEffect(() => {
+    // getCategory();
+    getProduct();
+    getEmployee();
+    getCustomer()
+  }, [getEmployee, getProduct, getCustomer]);
+
+  useEffect(() => {
+    getOrders();
+  }, [getOrders, refresh]);
 
 
   const columns = [
@@ -114,32 +151,25 @@ export default function Orders() {
       },
     },
     {
-      title: 'Actions ',
-      dataIndex: 'no',
+      title: 'Avatar',
+      dataIndex: 'No',
       key: 'no',
       width: '1%',
-
       render: function (text, record) {
         return (
-          // <Link style={{ textDecoration: "none", color: "inherit" }} to={`${record._id}`}>
-          //   <AiOutlineEye style={{ fontSize: 25, verticalAlign: 'middle' }} />
-          // </Link>
-
-          <Space>
-            <Button
-              type="dashed"
-              icon={<EditOutlined />}
-              onClick={onSelectOders(record)}
-            />
+          <Space wrap size={16}>
 
             <Link style={{ textDecoration: "none", color: "inherit" }} to={`${record._id}`}>
-              <AiOutlineEye style={{ fontSize: 25, verticalAlign: 'middle' }} />
-            </Link>
+              <Avatar size="large" icon={<UserOutlined />} />
+            </Link >
           </Space>
+
 
         );
       },
     },
+  
+
 
     {
       title: 'Khách Hàng',
@@ -147,10 +177,10 @@ export default function Orders() {
       key: 'customerName',
       render: function (text, record) {
         return (
-          <Link style={{ textDecoration: "none", color: "inherit" }} to={`customers/${record.customer?._id}`}>
+          <div style={{ textDecoration: "none", color: "inherit" }} to={`customers/${record.customer?._id}`}>
             {record.customer?.fullName}
 
-          </Link>
+          </div>
 
         ); // record.supplier && record.supplier._id
 
@@ -158,7 +188,7 @@ export default function Orders() {
     },
 
 
-  
+
     {
       title: 'Hình Thức Thanh Toán',
       key: 'paymentType',
@@ -195,10 +225,44 @@ export default function Orders() {
         );
       },
     },
+    // {
+    //   title: 'Ngày Giao Hàng',
+    //   key: 'shippedDate',
+    //   dataIndex: 'shippedDate',
+    // },
     {
-      title: 'Ngày Giao Hàng',
-      key: 'shippedDate',
-      dataIndex: 'shippedDate',
+      title: 'Địa Chỉ Giao Hàng',
+      dataIndex: 'customer',
+      key: 'customerName',
+      render: function (text, record) {
+        return (
+          <div style={{ textDecoration: "none", color: "inherit" }} to={`customers/${record.customer?._id}`}>
+            {record.customer?.address}
+
+          </div>
+
+        ); // record.supplier && record.supplier._id
+
+      },
+    },
+    {
+      title: 'Actions ',
+      dataIndex: 'no',
+      key: 'no',
+      width: '1%',
+
+      render: function (text, record) {
+        return (
+          <Space>
+            <Button
+              type="dashed"
+              icon={<EditOutlined />}
+              onClick={onSelectOders(record)}
+            />
+          </Space>
+
+        );
+      },
     },
 
 
@@ -228,43 +292,7 @@ export default function Orders() {
   //         console.log(error);
   //     }
   // }, []);
-  const getCustomer = useCallback(async () => {
-    try {
-      const res = await axiosClient.get('/customers');
-      setCustomer(res.data.payload || []);
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
-  // data categori
-  const getEmployee = useCallback(async () => {
-    try {
-      const res = await axiosClient.get('/employees');
-      setEmployee(res.data.payload || []);
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
-  const getProduct = useCallback(async () => {
-    try {
-      const res = await axiosClient.get('/products');
-      setProducts(res.data.payload);
-      console.log('««««« product »»»»»', res);
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
 
-  useEffect(() => {
-    // getCategory();
-    getProduct();
-    getEmployee();
-    getCustomer()
-  }, [getEmployee, getProduct, getCustomer]);
-
-  useEffect(() => {
-    getOrders();
-  }, [getOrders, refresh]);
   return (
     <>
       <div>

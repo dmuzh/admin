@@ -196,6 +196,7 @@ const Employees = () => {
     const getEmployees = useCallback(async () => {
         try {
             const res = await axiosClient.get('/employees');
+            console.log('««««« employ »»»»»', res);
             setEmployees(res.data.payload || []);
         } catch (error) {
             console.log(error);
@@ -244,6 +245,7 @@ const Employees = () => {
             key: 'lastName',
             ...getColumnSearchProps('last Name'),
         },
+    
 
         {
             title: 'email',
@@ -306,7 +308,7 @@ const Employees = () => {
 
             {contextHolder}
             <div className='title'>
-                <div><h1>employees</h1></div>
+                <div><h3>employees</h3></div>
                 <div className='add'>
                     <Link to='/ADDemployees' >
                         <Box sx={{ '& > :not(style)': { m: 1 } }}>
